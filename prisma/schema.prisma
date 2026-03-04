@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+model User_FeedBack {
+  UserId      String     @id @default(uuid()) @db.Uuid
+  Email       String     @unique @db.VarChar(255)
+  Name        String?    @db.VarChar(255)
+  Create_Date DateTime   @default(now())
+  Update_Date DateTime   @updatedAt
+
+  FeedBacks   FeedBack[]
+}
+
+model FeedBack {
+  Id          String     @id @default(uuid()) @db.Uuid
+  UserId      String     @db.Uuid
+  Content     String
+  Create_Date DateTime   @default(now())
+  Update_Date DateTime   @updatedAt
+
+  User        User_FeedBack @relation(fields: [UserId], references: [UserId])
+  Images      Image[]
+}
+
+model Image {
+  Image_Id     String    @id @default(uuid()) @db.Uuid
+  Url_Image    String    @db.VarChar(255)
+  Create_Date  DateTime  @default(now())
+  Update_Date  DateTime  @updatedAt
+
+  FeedBackId   String    @db.Uuid
+  FeedBack     FeedBack  @relation(fields: [FeedBackId], references: [Id])
+}
+
+model Version_Notify {
+  VerId         String   @id @default(uuid()) @db.Uuid
+  Version       String   @db.VarChar(255)
+  Title         String   @db.VarChar(255)
+  Content       String
+  Date_Release  DateTime
+  Expired       DateTime
+  Is_Expried    Boolean
+  Create_date   DateTime @default(now())
+  Update_date   DateTime @updatedAt
+}
