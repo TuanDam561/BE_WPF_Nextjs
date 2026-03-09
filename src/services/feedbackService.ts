@@ -2,6 +2,7 @@ import { UserModel } from "@/models/userModel";
 import { FeedBackModel } from "@/models/feedbackModel";
 import { ImageModel } from "@/models/imageModel";
 import type { CreateFeedbackPayload, CreateFeedbackResponse } from "@/types/feedbackTypes";
+import { AppError } from "@shared/appError";
 
 
 export class FeedBackService {
@@ -14,7 +15,7 @@ export class FeedBackService {
         const { email, userName, content, images = [] } = payload;
 
         if (!email || !userName || !content) {
-            throw new Error("Thiếu thông tin bắt buộc");
+            throw new AppError("Thiếu thông tin bắt buộc", 400, "BAD_REQUEST");
         }
 
         // 1️⃣ Tìm user theo email
@@ -73,7 +74,7 @@ export class FeedBackService {
         const feedback = await FeedBackModel.findById(id);
 
         if (!feedback) {
-            throw new Error("Feedback không tồn tại");
+            throw new AppError("Feedback không tồn tại", 404, "NOT_FOUND");
         }
 
         return feedback;
