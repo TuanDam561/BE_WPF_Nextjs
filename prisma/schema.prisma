@@ -28,7 +28,6 @@ model FeedBack {
   Content     String
   Create_Date DateTime   @default(now())
   Update_Date DateTime   @updatedAt
-
   User        User_FeedBack @relation(fields: [UserId], references: [UserId])
   Images      Image[]
 }
@@ -38,7 +37,6 @@ model Image {
   Url_Image    String    @db.VarChar(255)
   Create_Date  DateTime  @default(now())
   Update_Date  DateTime  @updatedAt
-
   FeedBackId   String    @db.Uuid
   FeedBack     FeedBack  @relation(fields: [FeedBackId], references: [Id])
 }
