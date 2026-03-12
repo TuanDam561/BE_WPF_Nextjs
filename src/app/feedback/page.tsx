@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import "./feedback.css";
 
+
 type Image = {
     Image_Id: string;
     Url_Image: string;
@@ -67,7 +68,8 @@ export default function FeedbackPage() {
 
 
     useEffect(() => {
-        fetch("http://localhost:3000/api/feedback")
+        const baseUrl = process.env.DOMAIN || process.env.DOMAINLOCAL
+        fetch(baseUrl + "/feedback")
             .then((res) => res.json())
             .then((res) => {
                 setFeedbacks(res.data);
