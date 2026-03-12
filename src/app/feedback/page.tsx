@@ -68,8 +68,7 @@ export default function FeedbackPage() {
 
 
     useEffect(() => {
-        const baseUrl = process.env.DOMAIN || process.env.DOMAINLOCAL
-        fetch(baseUrl + "/feedback")
+        fetch(process.env.DOMAIN + "/feedback")
             .then((res) => res.json())
             .then((res) => {
                 setFeedbacks(res.data);
