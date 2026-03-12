@@ -68,7 +68,7 @@ export default function FeedbackPage() {
 
 
     useEffect(() => {
-        fetch(process.env.DOMAIN + "/feedback")
+        fetch("/api/feedback")
             .then((res) => res.json())
             .then((res) => {
                 setFeedbacks(res.data);
